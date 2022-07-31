@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HexLayout : MonoBehaviour
 {
+    PerlinNoise perlin;
+    
     [Header("grid settings")]
     public Vector2Int gridSize;
 
@@ -16,17 +18,25 @@ public class HexLayout : MonoBehaviour
     public Material material;
     public Material Wmaterial;
 
+    private void Start() {
+    }
+    
     private void OnEnable()
     {
+        perlin = GetComponent<PerlinNoise>();
+        perlin.Generate();
         LayoutGrid();
     }
     private void LayoutGrid()
     {
+        float[,] val = perlin.noiseArray;
         for (int y = 0; y < gridSize.y; y++)
         {
             for (int x = 0; x < gridSize.x; x++)
             {
-                float elevation = Mathf.Sin(x / 5.0f + (y/4.0f));
+                float elevation = val[x, y];
+                elevation = elevation - ((elevation * 20f) % 1)/10f;
+                //Debug.Log(val[x, y]);
                 if(elevation > 0f)
                 {
                     isGround = true;
@@ -39,14 +49,15 @@ public class HexLayout : MonoBehaviour
                 hexRenderer.isFlatTopped = isFlatTopped;
                 hexRenderer.outerSize = outerSize;
                 hexRenderer.innerSize = innerSize;
-                hexRenderer.height = (elevation + 1f) * 3;
+                hexRenderer.height = (elevation) * 10;
                 hexRenderer.isGround = isGround;
-                if(elevation > 0f)
-                    hexRenderer.SetMaterial(material);
+                if(elevation > 0.4f)
+                  hexRenderer.SetMaterial(material);
                 else
                 {
                     hexRenderer.SetMaterial(Wmaterial);
-                    hexRenderer.height = 0.5f;
+                    hexRenderer.height = 0.0f;
+                    tile.layer = 7;
                 }
                 hexRenderer.DrawMesh();
 
@@ -86,8 +97,8 @@ public class HexLayout : MonoBehaviour
         else
         {
             shouldOffset = (column % 2) == 0;
-            width = 2f * (size + 0.1f);
-            height = Mathf.Sqrt(3f) * (size + 0.1f);
+            width = 2f * (size + 0.05f);
+            height = Mathf.Sqrt(3f) * (size + 0.05f);
 
             horizontalDistance = width * (3f /4f);
             verticalDistance = height;
