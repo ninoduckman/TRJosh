@@ -13,6 +13,7 @@ public class HexLayout : MonoBehaviour
     public float outerSize = 1f;
     public float innerSize = 0f;
     public float height = 1f;
+	public float terraceDivisions = 20f;
     public bool isFlatTopped;
     public bool isGround;
     public Material material;
@@ -35,12 +36,8 @@ public class HexLayout : MonoBehaviour
             for (int x = 0; x < gridSize.x; x++)
             {
                 float elevation = val[x, y];
-                elevation = elevation - ((elevation * 20f) % 1)/10f;
-                //Debug.Log(val[x, y]);
-                if(elevation > 0f)
-                {
-                    isGround = true;
-                }
+                elevation = Mathf.Floor(elevation * terraceDivisions) / terraceDivisions;
+
                 GameObject tile = new GameObject($"Hex {x},{y}", typeof(HexRenderer));
                 tile.transform.position = GetPosForHexFromCoords(new Vector2Int(x, y));
 
@@ -70,43 +67,21 @@ public class HexLayout : MonoBehaviour
     {
         int column = coords.x;
         int row = coords.y;
-        float width;
-        float height;
         float xPosition = 0;
         float yPosition = 0;
-        bool shouldOffset;
-        float horizontalDistance;
-        float verticalDistance;
-        float offset;
         float size = outerSize;
 
-        if(!isFlatTopped)
-        {
-            shouldOffset = (row % 2) == 0;
-            width = Mathf.Sqrt(3) * (size + 0.3f);
-            height = 2f * (size + 0.3f);
+		float shouldOffset = (float)(column % 2);
+        int width = 2f * (size + 0.05f);
+        int height = Mathf.Sqrt(3f) * (size + 0.05f);
 
-            horizontalDistance = width;
-            verticalDistance = height * (3f/4f);
+        int horizontalDistance = width * (3f /4f);
+        int verticalDistance = height;
 
-            offset = (shouldOffset) ? width/2 : 0;
-
-            xPosition = (column * (horizontalDistance)) + offset;
-            yPosition = (row * verticalDistance);
-        }
-        else
-        {
-            shouldOffset = (column % 2) == 0;
-            width = 2f * (size + 0.05f);
-            height = Mathf.Sqrt(3f) * (size + 0.05f);
-
-            horizontalDistance = width * (3f /4f);
-            verticalDistance = height;
-
-            offset = (shouldOffset) ? height/2 : 0;
-            xPosition = (column * horizontalDistance);
-            yPosition = (row * verticalDistance) - offset; 
-        }
+		int offset = (height / 2.0f) * shouldOffset;  
+        xPosition = (column * horizontalDistance);
+        yPosition = (row * verticalDistance) - offset; 
+        
 
         return new Vector3(xPosition, 0, -yPosition);
     }
