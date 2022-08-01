@@ -16,6 +16,7 @@ public class HexLayout : MonoBehaviour
 	public float terraceDivisions = 20f;
     public bool isFlatTopped;
     public bool isGround;
+    public bool darkModed;
     public Material material;
     public Material Wmaterial;
 
@@ -37,23 +38,38 @@ public class HexLayout : MonoBehaviour
             {
                 float elevation = val[x, y];
                 elevation = Mathf.Floor(elevation * terraceDivisions) / terraceDivisions;
+                Debug.Log(elevation);
+
+                if(elevation > 0.4f)
+                {
+                    isGround = true;
+                }
+                else
+                {
+                    isGround = false;
+                }
 
                 GameObject tile = new GameObject($"Hex {x},{y}", typeof(HexRenderer));
-                tile.transform.position = GetPosForHexFromCoords(new Vector2Int(x, y));
+                if(isGround)
+                    tile.transform.position = GetPosForHexFromCoords(new Vector2Int(x, y), (elevation) * 2);
+                else
+                    tile.transform.position = GetPosForHexFromCoords(new Vector2Int(x, y), 0);
 
 
                 HexRenderer hexRenderer = tile.GetComponent<HexRenderer>();
                 hexRenderer.isFlatTopped = isFlatTopped;
                 hexRenderer.outerSize = outerSize;
                 hexRenderer.innerSize = innerSize;
-                hexRenderer.height = (elevation) * 10;
+                hexRenderer.height = (elevation) * 2;
                 hexRenderer.isGround = isGround;
                 if(elevation > 0.4f)
+                {
                   hexRenderer.SetMaterial(material);
+                }
                 else
                 {
                     hexRenderer.SetMaterial(Wmaterial);
-                    hexRenderer.height = 0.0f;
+                    hexRenderer.height = 2f;
                     tile.layer = 7;
                 }
                 hexRenderer.DrawMesh();
@@ -63,7 +79,7 @@ public class HexLayout : MonoBehaviour
         }
     }
 
-    public Vector3 GetPosForHexFromCoords(Vector2Int coords)
+    public Vector3 GetPosForHexFromCoords(Vector2Int coords, float HexHeight)
     {
         int column = coords.x;
         int row = coords.y;
@@ -71,18 +87,18 @@ public class HexLayout : MonoBehaviour
         float yPosition = 0;
         float size = outerSize;
 
-		float shouldOffset = (float)(column % 2);
-        int width = 2f * (size + 0.05f);
-        int height = Mathf.Sqrt(3f) * (size + 0.05f);
+		bool shouldOffset = (column % 2) == 0;
+        float width = 2f * (size + 0.05f);
+        float height = Mathf.Sqrt(3f) * (size + 0.05f);
 
-        int horizontalDistance = width * (3f /4f);
-        int verticalDistance = height;
+        float horizontalDistance = width * (3f /4f);
+        float verticalDistance = height;
 
-		int offset = (height / 2.0f) * shouldOffset;  
+        float offset = (shouldOffset) ? height/2 : 0;
         xPosition = (column * horizontalDistance);
         yPosition = (row * verticalDistance) - offset; 
         
 
-        return new Vector3(xPosition, 0, -yPosition);
+        return new Vector3(xPosition, HexHeight / 2, -yPosition);
     }
 }

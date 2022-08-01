@@ -34,6 +34,7 @@ public class HexRenderer : MonoBehaviour
     public float innerSize;
     public float outerSize;
     public float height;
+    public float ypos;
     public bool isFlatTopped;
     public bool isGround;
     
@@ -51,6 +52,7 @@ public class HexRenderer : MonoBehaviour
         SetMaterial(material);
 
         m_meshCollider.sharedMesh = m_mesh;
+        
     }
     public void SetMaterial(Material mat)
     {

@@ -9,8 +9,8 @@ public class PerlinNoise : MonoBehaviour
     public float width;
     public float height;
 
-    float offsetX;
-    float offsetY;
+    public float offsetX;
+    public float offsetY;
 
     public float[,] noiseArray;
 
@@ -18,12 +18,13 @@ public class PerlinNoise : MonoBehaviour
 
     public float scale = 20f;
 
+    private void OnEnable() {
+    }
+
     public void Generate() {
         width = hexLayout.gridSize.x;
         height = hexLayout.gridSize.y;
         noiseArray = GenerateHeights();
-        offsetX = Random.Range(0f, 99999f);
-        offsetY = Random.Range(0f, 99999f);
     }
 
     public float[,] GenerateHeights()
@@ -42,8 +43,8 @@ public class PerlinNoise : MonoBehaviour
 
     float CalculateHeight (int x, int y)
     {
-        float xCoord = x / (width) * scale + offsetX;
-        float yCoord = y / (height) * scale + offsetY;
+        float xCoord = (float)x / (width) * scale;
+        float yCoord = (float)y / (height) * scale;
 
         return Mathf.PerlinNoise(xCoord, yCoord);
     }

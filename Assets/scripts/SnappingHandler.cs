@@ -10,6 +10,8 @@ public class SnappingHandler : MonoBehaviour
     public Material targeted;
     public LayerMask lm;
 
+    private bool canChange = true;
+
     public GameObject LastSelected;
     public GameObject LastTargeted;
 
@@ -17,17 +19,23 @@ public class SnappingHandler : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(inputManager.mousePos);
         Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue);
 
-        if(Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit, Mathf.Infinity, lm))
+        if(Physics.Raycast(ray.origin, ray.direction, out RaycastHit hit, 100, lm))
         {
             if(hit.transform.gameObject.GetComponent<HexRenderer>() != null)
             {
                 if(inputManager.isClicking)
                 {
-                    hit.collider.gameObject.GetComponent<Renderer>().material = selected;
-                    if(LastSelected != hit.collider.gameObject)
+                    if(canChange)
+                    {
+                        hit.collider.gameObject.GetComponent<Renderer>().material = selected;
+                    }
+                    if(LastSelected != hit.collider.gameObject && canChange)
                     {
                         LastSelected.GetComponent<Renderer>().material = ground;
+                        LastSelected.GetComponent<Transform>().position = new Vector3(LastSelected.GetComponent<Transform>().position.x, LastSelected.GetComponent<Transform>().position.y - 0.5f, LastSelected.GetComponent<Transform>().position.z);
                         LastSelected = hit.collider.gameObject;
+                        hit.transform.gameObject.GetComponent<Transform>().position = new Vector3(hit.transform.gameObject.GetComponent<Transform>().position.x, hit.transform.gameObject.GetComponent<Transform>().position.y + 0.5f, hit.transform.gameObject.GetComponent<Transform>().position.z);
+                        canChange = false;
                     }
                 }
                 else
@@ -42,8 +50,15 @@ public class SnappingHandler : MonoBehaviour
                         
                         LastTargeted = hit.collider.gameObject;
                     }
+                    canChange = true;
                 }
+                
+            
             }
+        }
+        else
+        {
+            LastTargeted.GetComponent<Renderer>().material = ground;
         }
     }
 }

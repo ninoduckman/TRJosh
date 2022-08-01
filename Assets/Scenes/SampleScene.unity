@@ -226,9 +226,11 @@ MonoBehaviour:
   outerSize: 1
   innerSize: 0
   height: 5
+  terraceDivisions: 20
   isFlatTopped: 1
   isGround: 0
-  material: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  darkModed: 0
+  material: {fileID: 2100000, guid: af31fab013ae2bc479cbe13d3135e4a9, type: 2}
   Wmaterial: {fileID: 2100000, guid: 45faed56d3fcf7d44b97685335414744, type: 2}
 --- !u!114 &31964490
 MonoBehaviour:
@@ -245,8 +247,10 @@ MonoBehaviour:
   depth: 20
   width: 0
   height: 0
+  offsetX: 0
+  offsetY: 0
   hexLayout: {fileID: 31964489}
-  scale: 3
+  scale: 5
 --- !u!114 &31964491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,7 +264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputManager: {fileID: 930105015}
-  ground: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  ground: {fileID: 2100000, guid: af31fab013ae2bc479cbe13d3135e4a9, type: 2}
   selected: {fileID: 2100000, guid: 31b171d7ca659964ab41757160dcc39a, type: 2}
   targeted: {fileID: 2100000, guid: 4cd16964e54dc4b4084bbb5062df5458, type: 2}
   lm:
@@ -481,7 +485,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.4245283, g: 0.4245283, b: 0.4245283, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

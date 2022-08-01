@@ -25,13 +25,31 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     ""maps"": [
         {
             ""name"": ""CamMovement"",
-            ""id"": ""2624ff4b-5ea7-4c3d-a734-4ad0a4251c62"",
+            ""id"": ""c3e38a1b-168c-4636-bcbf-7fdf8901f94c"",
             ""actions"": [
                 {
                     ""name"": ""Move"",
                     ""type"": ""PassThrough"",
-                    ""id"": ""3663715b-8cc1-45b5-a656-90f3f6c3c274"",
+                    ""id"": ""6bce0d9d-67c4-4678-8c84-6ebb3baf6de3"",
                     ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MousePos"",
+                    ""type"": ""Value"",
+                    ""id"": ""d2f4d9cb-00a9-46c2-bae0-ed80429314de"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""5dabe48b-a0c7-43a0-9bd8-3fad8484ce9d"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -39,26 +57,8 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Zoom"",
                     ""type"": ""PassThrough"",
-                    ""id"": ""d4506616-18d6-4237-a86b-37d1c53b07bb"",
+                    ""id"": ""95fd3f16-3f42-4a39-b410-05cd1a36747c"",
                     ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Click"",
-                    ""type"": ""Button"",
-                    ""id"": ""9e20beaa-40da-4536-8d75-6301e5ff8011"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""MousePos"",
-                    ""type"": ""Value"",
-                    ""id"": ""7f60e232-b92e-4c9d-b3a0-893f3b29c44c"",
-                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -67,7 +67,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": ""wasd"",
-                    ""id"": ""c2b78e1d-a330-472e-9ff2-96dba634be75"",
+                    ""id"": ""b23235bb-3f99-49ae-ba95-4ce6e15ee27d"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -78,7 +78,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""263f8c6e-ffff-4903-be12-a280828dad5c"",
+                    ""id"": ""2160cd2b-8ccf-43db-8c87-1db46edc4b5b"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -89,7 +89,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""c735df38-176c-40a0-8558-897e12081d77"",
+                    ""id"": ""56929c30-d9b7-4658-b904-dd85d93e2774"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -100,7 +100,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""53d48758-ff37-4c2e-b368-e9c509696080"",
+                    ""id"": ""fb131888-ed4b-4692-be88-4499bba0a488"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -111,7 +111,7 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""49e35772-e62b-4bd9-8d80-6f6463444637"",
+                    ""id"": ""a6ef4542-9b73-47fe-af14-44181e93890d"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -122,18 +122,18 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c4ff2286-6310-42e8-95bb-42276c3568c8"",
-                    ""path"": ""<Mouse>/scroll/y"",
+                    ""id"": ""424c7e41-cd95-4e31-ac4e-0ce8c22b9772"",
+                    ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Zoom"",
+                    ""action"": ""MousePos"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""46eec119-cd18-442c-a85a-baf2ef31d990"",
+                    ""id"": ""4f48ae20-026d-46dd-91c2-8f35d08fd1c4"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -144,12 +144,40 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b2dc0dbf-6c44-41b8-8f6e-17ae4b1b3113"",
-                    ""path"": ""<Mouse>/position"",
+                    ""id"": ""cfb0145f-6297-46d2-9716-2f3d2c57bacb"",
+                    ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MousePos"",
+                    ""action"": ""Zoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Other"",
+            ""id"": ""fe9eaae6-2cc1-42e2-911f-54649f532d1e"",
+            ""actions"": [
+                {
+                    ""name"": ""Dark"",
+                    ""type"": ""Button"",
+                    ""id"": ""0bfcfe46-12cc-433d-8a0c-c472d3cf27ea"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""89c80dc1-9ff3-458c-bebe-d6b2a9e8b0e6"",
+                    ""path"": ""<Keyboard>/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dark"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -161,9 +189,12 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
         // CamMovement
         m_CamMovement = asset.FindActionMap("CamMovement", throwIfNotFound: true);
         m_CamMovement_Move = m_CamMovement.FindAction("Move", throwIfNotFound: true);
-        m_CamMovement_Zoom = m_CamMovement.FindAction("Zoom", throwIfNotFound: true);
-        m_CamMovement_Click = m_CamMovement.FindAction("Click", throwIfNotFound: true);
         m_CamMovement_MousePos = m_CamMovement.FindAction("MousePos", throwIfNotFound: true);
+        m_CamMovement_Click = m_CamMovement.FindAction("Click", throwIfNotFound: true);
+        m_CamMovement_Zoom = m_CamMovement.FindAction("Zoom", throwIfNotFound: true);
+        // Other
+        m_Other = asset.FindActionMap("Other", throwIfNotFound: true);
+        m_Other_Dark = m_Other.FindAction("Dark", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -224,17 +255,17 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
     private readonly InputActionMap m_CamMovement;
     private ICamMovementActions m_CamMovementActionsCallbackInterface;
     private readonly InputAction m_CamMovement_Move;
-    private readonly InputAction m_CamMovement_Zoom;
-    private readonly InputAction m_CamMovement_Click;
     private readonly InputAction m_CamMovement_MousePos;
+    private readonly InputAction m_CamMovement_Click;
+    private readonly InputAction m_CamMovement_Zoom;
     public struct CamMovementActions
     {
         private @PlayerControls m_Wrapper;
         public CamMovementActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_CamMovement_Move;
-        public InputAction @Zoom => m_Wrapper.m_CamMovement_Zoom;
-        public InputAction @Click => m_Wrapper.m_CamMovement_Click;
         public InputAction @MousePos => m_Wrapper.m_CamMovement_MousePos;
+        public InputAction @Click => m_Wrapper.m_CamMovement_Click;
+        public InputAction @Zoom => m_Wrapper.m_CamMovement_Zoom;
         public InputActionMap Get() { return m_Wrapper.m_CamMovement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -247,15 +278,15 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Move.started -= m_Wrapper.m_CamMovementActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_CamMovementActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_CamMovementActionsCallbackInterface.OnMove;
-                @Zoom.started -= m_Wrapper.m_CamMovementActionsCallbackInterface.OnZoom;
-                @Zoom.performed -= m_Wrapper.m_CamMovementActionsCallbackInterface.OnZoom;
-                @Zoom.canceled -= m_Wrapper.m_CamMovementActionsCallbackInterface.OnZoom;
-                @Click.started -= m_Wrapper.m_CamMovementActionsCallbackInterface.OnClick;
-                @Click.performed -= m_Wrapper.m_CamMovementActionsCallbackInterface.OnClick;
-                @Click.canceled -= m_Wrapper.m_CamMovementActionsCallbackInterface.OnClick;
                 @MousePos.started -= m_Wrapper.m_CamMovementActionsCallbackInterface.OnMousePos;
                 @MousePos.performed -= m_Wrapper.m_CamMovementActionsCallbackInterface.OnMousePos;
                 @MousePos.canceled -= m_Wrapper.m_CamMovementActionsCallbackInterface.OnMousePos;
+                @Click.started -= m_Wrapper.m_CamMovementActionsCallbackInterface.OnClick;
+                @Click.performed -= m_Wrapper.m_CamMovementActionsCallbackInterface.OnClick;
+                @Click.canceled -= m_Wrapper.m_CamMovementActionsCallbackInterface.OnClick;
+                @Zoom.started -= m_Wrapper.m_CamMovementActionsCallbackInterface.OnZoom;
+                @Zoom.performed -= m_Wrapper.m_CamMovementActionsCallbackInterface.OnZoom;
+                @Zoom.canceled -= m_Wrapper.m_CamMovementActionsCallbackInterface.OnZoom;
             }
             m_Wrapper.m_CamMovementActionsCallbackInterface = instance;
             if (instance != null)
@@ -263,24 +294,61 @@ public partial class @PlayerControls : IInputActionCollection2, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
-                @Zoom.started += instance.OnZoom;
-                @Zoom.performed += instance.OnZoom;
-                @Zoom.canceled += instance.OnZoom;
-                @Click.started += instance.OnClick;
-                @Click.performed += instance.OnClick;
-                @Click.canceled += instance.OnClick;
                 @MousePos.started += instance.OnMousePos;
                 @MousePos.performed += instance.OnMousePos;
                 @MousePos.canceled += instance.OnMousePos;
+                @Click.started += instance.OnClick;
+                @Click.performed += instance.OnClick;
+                @Click.canceled += instance.OnClick;
+                @Zoom.started += instance.OnZoom;
+                @Zoom.performed += instance.OnZoom;
+                @Zoom.canceled += instance.OnZoom;
             }
         }
     }
     public CamMovementActions @CamMovement => new CamMovementActions(this);
+
+    // Other
+    private readonly InputActionMap m_Other;
+    private IOtherActions m_OtherActionsCallbackInterface;
+    private readonly InputAction m_Other_Dark;
+    public struct OtherActions
+    {
+        private @PlayerControls m_Wrapper;
+        public OtherActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Dark => m_Wrapper.m_Other_Dark;
+        public InputActionMap Get() { return m_Wrapper.m_Other; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(OtherActions set) { return set.Get(); }
+        public void SetCallbacks(IOtherActions instance)
+        {
+            if (m_Wrapper.m_OtherActionsCallbackInterface != null)
+            {
+                @Dark.started -= m_Wrapper.m_OtherActionsCallbackInterface.OnDark;
+                @Dark.performed -= m_Wrapper.m_OtherActionsCallbackInterface.OnDark;
+                @Dark.canceled -= m_Wrapper.m_OtherActionsCallbackInterface.OnDark;
+            }
+            m_Wrapper.m_OtherActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Dark.started += instance.OnDark;
+                @Dark.performed += instance.OnDark;
+                @Dark.canceled += instance.OnDark;
+            }
+        }
+    }
+    public OtherActions @Other => new OtherActions(this);
     public interface ICamMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnZoom(InputAction.CallbackContext context);
-        void OnClick(InputAction.CallbackContext context);
         void OnMousePos(InputAction.CallbackContext context);
+        void OnClick(InputAction.CallbackContext context);
+        void OnZoom(InputAction.CallbackContext context);
+    }
+    public interface IOtherActions
+    {
+        void OnDark(InputAction.CallbackContext context);
     }
 }
