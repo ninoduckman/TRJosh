@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class HexLayout : MonoBehaviour
 {
-    PerlinNoise perlin;
-    public ObjectHandler oh;
+    public ObjectHandler objectHnd;
+
+    [Header("generation state")]
+    public uint offset = 100;
+    public float scale = 20f;
+    public float waterLevel = 0.3f;
     
     [Header("grid settings")]
     public Vector2Int gridSize;
@@ -13,71 +17,55 @@ public class HexLayout : MonoBehaviour
     [Header("Tile Settings")]
     public float outerSize = 1f;
     public float innerSize = 0f;
-    public float height = 1f;
 	public float terraceDivisions = 20f;
-    public bool isFlatTopped;
-    public bool isGround;
-    public bool darkModed;
-    public Material material;
-    public Material Wmaterial;
+    public Material groundMat;
+    public Material waterMat;
 
-    private void Start() {
-    }
+    float[,] noise;
+
+    private void Start() {}
     
     private void OnEnable()
     {
-        perlin = GetComponent<PerlinNoise>();
-        perlin.Generate();
+        noise = PerlinNoise.Generate(gridSize.x, gridSize.y, offset, scale);
         LayoutGrid();
     }
     private void LayoutGrid()
     {
-        float[,] val = perlin.noiseArray;
+        bool ground = false;
+
         for (int y = 0; y < gridSize.y; y++)
         {
             for (int x = 0; x < gridSize.x; x++)
             {
-                float elevation = val[x, y];
+                float elevation = noise[x, y];
                 elevation = Mathf.Floor(elevation * terraceDivisions) / terraceDivisions;
 
-                if(elevation > 0.3f)
-                {
-                    isGround = true;
-                }
-                else
-                {
-                    isGround = false;
-                }
-
                 GameObject tile = new GameObject($"Hex {x},{y}", typeof(HexRenderer));
-                if(isGround)
-                    tile.transform.position = GetPosForHexFromCoords(new Vector2Int(x, y), (elevation) * 2);
-                else
-                    tile.transform.position = GetPosForHexFromCoords(new Vector2Int(x, y), 0.1f);
-
-
                 HexRenderer hexRenderer = tile.GetComponent<HexRenderer>();
-                hexRenderer.isFlatTopped = isFlatTopped;
-                hexRenderer.outerSize = outerSize;
-                hexRenderer.innerSize = innerSize;
-                hexRenderer.height = (elevation) * 2;
-                hexRenderer.isGround = isGround;
-                if(elevation > 0.3f)
+
+                if(elevation > waterLevel)
                 {
-                  hexRenderer.SetMaterial(material);
+                    ground = true;
+                    hexRenderer.SetMaterial(groundMat);
+                    tile.transform.position = GetPosForHexFromCoords(new Vector2Int(x, y), (elevation) * 2);
                 }
                 else
                 {
-                    hexRenderer.SetMaterial(Wmaterial);
-                    hexRenderer.height = 2f;
+                    ground = false;
+                    hexRenderer.SetMaterial(waterMat);
                     tile.layer = 7;
+                    tile.transform.position = GetPosForHexFromCoords(new Vector2Int(x, y), 0.1f);
                 }
-                hexRenderer.DrawMesh();
+
+                hexRenderer.DrawMesh(elevation * 2, innerSize, outerSize, ground);
 
                 tile.transform.SetParent(transform, true);
             }
         }
-        oh.CreateObject("Tree", 0, Wmaterial, GameObject.Find("Hex 0,0").GetComponent<HexRenderer>());
+
+        // debug tree :)
+        objectHnd.CreateObject("Tree", 0, waterMat, GameObject.Find("Hex 0,0").GetComponent<HexRenderer>());
     }
 
     public Vector3 GetPosForHexFromCoords(Vector2Int coords, float HexHeight)
@@ -98,7 +86,6 @@ public class HexLayout : MonoBehaviour
         float offset = (shouldOffset) ? height/2 : 0;
         xPosition = (column * horizontalDistance);
         yPosition = (row * verticalDistance) - offset; 
-        
 
         return new Vector3(xPosition, HexHeight / 2, -yPosition);
     }

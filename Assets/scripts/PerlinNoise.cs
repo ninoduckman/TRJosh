@@ -1,58 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class PerlinNoise : MonoBehaviour
+public static class PerlinNoise
 {
-    public int depth = 20;
-    public float ConsScale;
+    public static float Concentration = 1.5f;
 
-    public float width;
-    public float height;
-
-    public float offsetX;
-    public float offsetY;
-
-    public float[,] noiseArray;
-
-    public HexLayout hexLayout;
-
-    public float scale = 20f;
-
-    private void OnEnable() {
-    }
-
-    public void Generate() {
-        width = hexLayout.gridSize.x;
-        height = hexLayout.gridSize.y;
-        noiseArray = GenerateHeights();
-    }
-
-    public float[,] GenerateHeights()
+    public static float[,] Generate (uint width, uint height, uint offset, float scale) 
     {
-        Vector2Int randomCoord = new Vector2Int((int)Random.Range(-offsetX, offsetX), (int)Random.Range(-offsetY, offsetY));
-        float[,] heights = new float[(int)width, (int)height];
+        int randomOffs = (int)Random.Range(-((float)offset), (float)offset);
+
+        float[,] noise = new float[width, height];
+
         for(int x = 0; x < width; x++)
         {
             for(int y = 0; y < height; y++)
             {
-                heights[x, y] = CalculateHeight(x + randomCoord.x, y + randomCoord.y, x, y);
+                noise[x, y] = CalculateHeight(x / (float)width, y / (float)height, randomOffs, scale);
             }
         }
 
-        return heights;
+        return noise;
     }
 
-    float CalculateHeight (int x, int y, int Rx, int Ry)
-    {
-        float xCoord = (float)x / (width);
-        float yCoord = (float)y / (height);
-        float RxCoord = (float)Rx / (width);
-        float RyCoord = (float)Ry / (height);
+    float CalculateHeight (float x, float y, int offset, float scale)
+    {  
+        float height = Mathf.PerlinNoise(x * scale, noiseCoords.y * scale);
 
-        float pn = Mathf.PerlinNoise(xCoord * scale, yCoord * scale);
-        pn *= (Mathf.Sin(RxCoord * Mathf.PI) * Mathf.Sin(RyCoord * Mathf.PI)) * ConsScale;
-        Debug.Log(xCoord);
-        return pn;
+        float factor = Mathf.Sin(x * Mathf.PI) * Mathf.Sin(y * Mathf.PI);
+        factor *= Concentration;
+
+        height = height * factor;
+        return height;
     }
 }

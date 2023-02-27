@@ -15,6 +15,7 @@ public struct Face
         this.uvs = uvs;
     }
 }
+
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshRenderer))]
 [RequireComponent(typeof(MeshCollider))]
@@ -28,17 +29,7 @@ public class HexRenderer : MonoBehaviour
     private List<Face> m_faces; 
 
     public Material material;
-    public Material Wmaterial;
-
-    [Header("vals")]
-    public float innerSize;
-    public float outerSize;
-    public float height;
-    public float ypos;
-    public bool isFlatTopped;
-    public bool isGround;
-    public bool hasObject;
-    
+    public Material Wmaterial;    
     
     private void Awake()
     {
@@ -59,52 +50,58 @@ public class HexRenderer : MonoBehaviour
     {
         m_meshRenderer.material = mat;
     }
+
     private void OnEnable()
     {
         DrawMesh();
     }
 
-    public void DrawMesh()
-    {
-        DrawFaces();
-        CombineFaces();
-    }
-    private void DrawFaces()
+    public void DrawMesh(float height, float inner, float outer, bool ground)
     {
         m_faces = new List<Face>();
 
-        if(isGround)
+        if(ground) 
+            AddGround(height, inner, outer);
+        else
+            AddWater(2f, inner, outer); // hard-coded water height here!!!!
+
+        CombineFaces();
+    }
+
+    private void AddGround(float height, float inner, float outer)
+    {
+        //top faces
+        for (int point = 0; point < 6; point++)
         {
-            //top faces
-            for (int point = 0; point < 6; point++)
-            {
-                m_faces.Add(CreateFace(innerSize, outerSize, height / 2f, height / 2f, point));
-            }
-
-            //bottom faces
-            for (int point = 0; point < 6; point++)
-            {
-                m_faces.Add(CreateFace(innerSize, outerSize, -height / 2f, -height / 2f, point));
-            }
-
-            //inner faces
-            for (int point = 0; point < 6; point++)
-            {
-                m_faces.Add(CreateFace(outerSize, outerSize, height / 2f, -height / 2f, point, true));
-            }
-            //outer faces
-            for (int point = 0; point < 6; point++)
-            {
-                m_faces.Add(CreateFace(innerSize, innerSize, height / 2f, -height / 2f, point, false));
-            }
+            m_faces.Add(CreateFace(innerSize, outerSize, height / 2f, height / 2f, point));
         }
-        else{
-            for (int point = 0; point < 6; point++)
-            {
-                m_faces.Add(CreateFace(innerSize, outerSize, (height - 2) / 2f, (height - 2) / 2f, point));
-            }
+
+        //bottom faces
+        for (int point = 0; point < 6; point++)
+        {
+            m_faces.Add(CreateFace(innerSize, outerSize, -height / 2f, -height / 2f, point));
+        }
+
+        //inner faces
+        for (int point = 0; point < 6; point++)
+        {
+            m_faces.Add(CreateFace(outerSize, outerSize, height / 2f, -height / 2f, point, true));
+        }
+        //outer faces
+        for (int point = 0; point < 6; point++)
+        {
+            m_faces.Add(CreateFace(innerSize, innerSize, height / 2f, -height / 2f, point, false));
         }
     }
+
+    private void AddWater(float height, float inner, float outer)
+    {
+        for (int point = 0; point < 6; point++)
+        {
+            m_faces.Add(CreateFace(innerSize, outerSize, (height - 2) / 2f, (height - 2) / 2f, point));
+        }
+    }
+
     private void CombineFaces()
     {
         List<Vector3> vertices = new List<Vector3>();
